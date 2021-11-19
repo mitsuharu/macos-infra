@@ -1,9 +1,7 @@
-macOS-infra
-===
+# macOS-infra
 
-- macOSのオレオレ開発環境を生成するスクリプト
-- macOS Montery 12.0.1
-
+- macOS のオレオレ開発環境を生成するスクリプト
+- macOS Monterey 12.0.1
 
 ## Usage
 
