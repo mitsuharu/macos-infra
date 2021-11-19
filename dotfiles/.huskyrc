@@ -1,0 +1,4 @@
+if [ -f anyenv ]; then
+  PATH=$PATH:/usr/local/bin
+  eval "$(anyenv init -)"
+fi
