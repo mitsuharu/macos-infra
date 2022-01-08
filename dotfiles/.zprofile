@@ -68,8 +68,10 @@ fi
 
 # android
 export ANDROID_HOME=~/Library/Android/sdk/
-export PATH=$PATH:~/Library/Android/sdk/platform-tools
-export PATH=$PATH:~/Library/Android/sdk/tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # for react-native dev
 alias ys="yarn start"
@@ -82,4 +84,8 @@ alias ya="yarn android"
 alias ypd="yarn pod"
 alias pyr='cd ios; rm -rf ./Pods; pod install; cd -; yr'
 alias yall="yarn install; yarn upgrade swagger-api; yarn pod; yarn ios --simulator='iPhone 13'"
+
+
+
+
 
