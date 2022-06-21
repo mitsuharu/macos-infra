@@ -5,7 +5,7 @@
 
 echo "dotfilesの設定をします"
 
-DOT_DIR="$PWD/../dotfiles"
+DOT_DIR="$PWD/macos-infra/dotfiles"
 CUR_DIR="$PWD"
 
 echo "- .zprofile の設定をしました"
