@@ -5,6 +5,14 @@ echo "Homebrew をインストールします"
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+echo "Brewfile の設定をします"
+
+SHELLS_DIR="$PWD/macos-infra/shells"
+
+ln -sf ${SHELLS_DIR}/Brewfile ~/Brewfile
+ln -sf ${SHELLS_DIR}/Brewfile.lock.json ~/Brewfile.lock.json
+
 brew bundle
 
 # java のシンボリック
