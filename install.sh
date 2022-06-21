@@ -8,7 +8,7 @@ echo "================================"
 
 # clone
 echo "(A) GitHubからレポジトリをダウンロードしています"
-# git clone https://github.com/mitsuharu/macos-infra.git ${DIR}
+git clone https://github.com/mitsuharu/macos-infra.git ${DIR}
 
 # install
 echo "(B) 開発初期設定を開始します\n"
