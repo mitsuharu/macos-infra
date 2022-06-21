@@ -76,10 +76,11 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # for react-native dev
 alias ys="yarn start"
 alias yi="yarn ios"
+alias yi-13="yarn ios --simulator 'iPhone 13'"
 alias yi-se="yarn ios --simulator 'iPhone SE'"
 alias yi-8="yarn ios --simulator='iPhone 8'"
 alias yi-x="yarn ios --simulator 'iPhone X'"
-alias yi-ipad="yarn ios --simulator='iPad Pro'"
+alias yi-ipad="yarn ios --simulator='iPad mini'"
 alias ya="yarn android"
 alias ypd="yarn pod"
 alias pyr='cd ios; rm -rf ./Pods; pod install; cd -; yr'
