@@ -37,3 +37,4 @@ nodenv rehash
 nodenv global ${NODE_VER}
 
 source ~/.zprofile
+wait

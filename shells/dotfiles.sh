@@ -17,4 +17,7 @@ ln -sf ${DOT_DIR}/.huskyrc ~/.huskyrc
 echo "- .npmrc の設定をしました"
 ln -sf ${DOT_DIR}/.npmrc ~/.npmrc
 
+source ~/.zprofile
+wait
+
 echo "dotfilesの設定が完了しました"
