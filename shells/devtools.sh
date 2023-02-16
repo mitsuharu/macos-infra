@@ -2,7 +2,7 @@
 
 # Cocoapods
 echo "Cocoapods をインストールします"
-brew install cocoapods
+gem install cocoapods
 pod setup
 
 # Carthage
