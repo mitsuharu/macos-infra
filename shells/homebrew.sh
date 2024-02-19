@@ -19,7 +19,8 @@ ln -sf ${SHELLS_DIR}/Brewfile.lock.json ~/Brewfile.lock.json
 brew bundle
 
 # java のシンボリック
-sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+#sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 
 source ~/.zprofile
 wait
