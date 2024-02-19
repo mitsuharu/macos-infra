@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RUBY_VER="3.0.2"
-NODE_VER="16.13.0"
+RUBY_VER="3.2.3"
+NODE_VER="20.11.1"
 
 source ~/.zprofile
 
