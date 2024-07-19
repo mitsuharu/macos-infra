@@ -2,7 +2,6 @@ tap "homebrew/cask"
 
 brew "openssl@1.1"
 brew "anyenv"
-brew "yarn"
 brew "watchman"
 brew "openjdk@17"
 brew "xcodegen"
