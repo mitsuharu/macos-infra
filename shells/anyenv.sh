@@ -50,5 +50,8 @@ echo "nodenv-aliases をインストールします"
 git clone https://github.com/nodenv/nodenv-aliases.git $(nodenv root)/plugins/nodenv-aliases
 nodenv alias --auto
 
+corepack enable
+corepack use yarn
+
 source ~/.zprofile
 wait
