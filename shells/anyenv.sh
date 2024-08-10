@@ -51,7 +51,7 @@ git clone https://github.com/nodenv/nodenv-aliases.git $(nodenv root)/plugins/no
 nodenv alias --auto
 
 corepack enable
-corepack use yarn
+# corepack use yarn # プロジェクトに追加する場合
 
 source ~/.zprofile
 wait
