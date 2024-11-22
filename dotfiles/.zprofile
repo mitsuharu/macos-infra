@@ -49,7 +49,7 @@ if [ -f /opt/homebrew/bin/brew ]; then
 
   # OpenSSL
   # see: https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
-  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
   export LDFLAGS="-L/opt/homebrew/opt/readline/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/readline/include"
   export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig"
