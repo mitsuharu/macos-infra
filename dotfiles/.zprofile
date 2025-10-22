@@ -47,16 +47,15 @@ fi
 if [ -f /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
+  # libyaml
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/libyaml/lib/pkgconfig"
+
   # OpenSSL
-  # see: https://stackoverflow.com/questions/69012676/install-older-ruby-versions-on-a-m1-macbook
-  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-  export LDFLAGS="-L/opt/homebrew/opt/readline/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/readline/include"
-  export PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig"
-  export optflags="-Wno-error=implicit-function-declaration"
-  # export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
-  # export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
-  # export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
+  export LDFLAGS="-L$HOMEBREW_PREFIX/lib"
+  export CPPFLAGS=""
+  export optflags=""
+  export OPENSSL_CFLAGS=""
+  export RUBY_CONFIGURE_OPTS=""
 
 fi
 
