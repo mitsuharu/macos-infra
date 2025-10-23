@@ -22,5 +22,9 @@ brew bundle
 #sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 
+
+echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
+killall gpg-agent
+
 source ~/.zprofile
 wait

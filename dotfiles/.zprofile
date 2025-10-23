@@ -59,6 +59,8 @@ if [ -f /opt/homebrew/bin/brew ]; then
 
 fi
 
+# GPG
+export GPG_TTY=$(tty)
 
 # anyenv
 if [ -e $HOME/.anyenv ]; then
