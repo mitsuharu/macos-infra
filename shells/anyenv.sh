@@ -1,7 +1,7 @@
 #!/bin/sh
 
 RUBY_VER="3.4.7"
-NODE_VER="24.9.0"
+NODE_VER="24.13.0"
 
 source ~/.zprofile
 wait
