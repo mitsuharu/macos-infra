@@ -63,6 +63,14 @@ export PATH="$HOME/bin:$PATH"
 - OSやCPUアーキテクチャに依存する処理は条件分岐し、サポート範囲を明記する。
 - CIでは原則、セットアップ本体や破壊的な変更を実行しない。
 
+## GitHub Actionsの依存関係とセキュリティ
+- Workflowの外部Actionは、原則としてリリースタグ（例: `actions/checkout@v4`）ではなく、検証済みの完全な40文字のコミットSHAに固定する。
+- 参照は `uses: owner/repo@<40文字のSHA> # vX.Y.Z` の形式とし、行末コメントに対応する正式なリリースバージョンを明記する。
+- SHAは公式リポジトリのリリースタグが指すコミットと照合する。短縮SHA、ブランチ名、可動タグのみの指定を避ける。
+- DependabotでGitHub Actionsの更新を月1回確認し、更新PRを作成する。更新PRでは新しいSHAとコメント中のバージョンを両方検証する。
+- Dependabotによる自動マージは行わず、CIと変更内容を確認してから手動でマージする。
+- サードパーティActionの追加は権限と信頼性を確認し、Workflowの `permissions` は必要最小限にする。
+
 ## 検証
 - Bash用スクリプトは構文チェックし、可能ならShellCheckで検証する。
 - Zsh設定は `zsh -n` で検証する。
