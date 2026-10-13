@@ -38,6 +38,10 @@ jobs:
           done < <(find . -type f -name '*.sh' -print0)
           zsh -n dotfiles/.zprofile
 
+      - name: Test setup safety without installation
+        shell: bash
+        run: bash tests/setup_safety.sh
+
       - name: Check Brewfile syntax
         run: ruby -c shells/Brewfile
 
