@@ -56,6 +56,10 @@ jobs:
             echo "::warning::ShellCheck で既存の問題を検出しました。結果はジョブのサマリーを確認してください。"
           fi
 
+      - name: Test setup entrypoint safety
+        shell: bash
+        run: bash tests/setup_safety.sh
+
       - name: Check Brewfile syntax
         run: ruby -c shells/Brewfile
 

@@ -1,33 +1,31 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-DIR="$PWD/macos-infra/shells"
+SHELLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# ### Command Line Tools
-echo "----------------"
-echo "(1) Command Line Tools for Xcodeのインストールをします"
-echo "----------------"
-xcode-select --install
+if ! xcode-select -p >/dev/null 2>&1; then
+  # xcode-select --install は非同期にGUIを開くため、完了待ちなしで後続を実行しない。
+  echo "Xcode Command Line Tools が見つかりません。インストール完了後、再度実行してください。" >&2
+  xcode-select --install
+  exit 1
+fi
 
-# # dotfiles
 echo "----------------"
 echo "(2) dotfiles"
 echo "----------------"
-${DIR}/dotfiles.sh
+bash "$SHELLS_DIR/dotfiles.sh"
 
-# ### homebrew
 echo "----------------"
 echo "(3) homebrew"
 echo "----------------"
-${DIR}/homebrew.sh
+bash "$SHELLS_DIR/homebrew.sh"
 
-# ### anyenv
 echo "----------------"
 echo "(4) anyenv"
 echo "----------------"
-${DIR}/anyenv.sh
+bash "$SHELLS_DIR/anyenv.sh"
 
-### devtool
 echo "----------------"
 echo "(5) devtools"
 echo "----------------"
-${DIR}/devtools.sh
+bash "$SHELLS_DIR/devtools.sh"
