@@ -36,7 +36,7 @@ SHELLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ln -sf "$SHELLS_DIR/Brewfile" "$HOME/Brewfile"
 ln -sf "$SHELLS_DIR/Brewfile.lock.json" "$HOME/Brewfile.lock.json"
 
-HOMEBREW_NO_ASK=1 brew bundle
+HOMEBREW_NO_ASK=1 brew bundle --file="$SHELLS_DIR/Brewfile"
 
 # java のシンボリック
 #sudo ln -sfn $(brew --prefix)/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
