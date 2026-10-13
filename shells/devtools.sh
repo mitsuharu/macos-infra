@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # macOS標準Rubyにgemを入れると/Library/Ruby/Gemsへの権限が必要になるため、rbenvで実行する。
-RBENV_BIN="$HOME/.anyenv/envs/rbenv/bin/rbenv"
+export RBENV_ROOT="$HOME/.anyenv/envs/rbenv"
+RBENV_BIN="$RBENV_ROOT/bin/rbenv"
 if [[ ! -x "$RBENV_BIN" ]]; then
   echo "エラー: rbenv が見つかりません。先に shells/anyenv.sh を実行してください。" >&2
   exit 1
