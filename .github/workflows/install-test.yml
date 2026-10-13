@@ -43,8 +43,8 @@ jobs:
           set -euo pipefail
           source "$HOME/.zprofile"
           brew bundle check --file=shells/Brewfile
-          test "$(rbenv version-name)" = "3.4.7"
-          test "$(nodenv version-name)" = "24.13.0"
+          test "$(rbenv version-name)" = "4.0.7"
+          test "$(nodenv version-name)" = "24.21.0"
           rbenv exec ruby --version
           rbenv exec gem env home
           nodenv exec node --version
