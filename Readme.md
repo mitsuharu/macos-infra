@@ -35,3 +35,19 @@ CIはmacOSバージョン・Xcodeバージョン・CPUアーキテクチャをAc
 ## GitHub Actionsの依存関係
 
 GitHub Actionsは完全なコミットSHAで固定し、行末コメントにリリースバージョンを記載します。`.github/dependabot.yml` により、GitHub Actionsの更新を月1回確認してPRを提案します。自動マージは行いません。
+
+## 他のMacで更新する
+
+一度リポジトリを配置したMacでは、次のコマンドで `master` の更新を取り込みます。
+
+```bash
+bash ~/macos-infra/update.sh
+```
+
+Brewfileに列挙されたツールも適用する場合は `--apply` を付けてください。
+
+```bash
+bash ~/macos-infra/update.sh --apply
+```
+
+未コミットの変更がある場合や `master` 以外のブランチでは停止します。dotfilesがリポジトリ内のファイルへシンボリックリンクされている場合、ファイル内容の変更は更新時に反映されます。新しいリンクの作成やRuby/Node.jsの変更、初期セットアップの再実行は行いません。
