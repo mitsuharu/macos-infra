@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-RUBY_VER="4.0.7"
+RUBY_VER="3.4.11"
 NODE_VER="24.21.0"
 
 source ~/.zprofile
