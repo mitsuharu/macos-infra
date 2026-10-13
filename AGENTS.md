@@ -76,7 +76,7 @@ export PATH="$HOME/bin:$PATH"
 - Zsh設定は `zsh -n` で検証する。
 - Homebrew用の定義は変更時に構文と参照先を検証する。
 - 検証していない実機動作を成功したと記載しない。
-- CIはPull Requestの `opened`、`synchronize`、`reopened` で実行する。定期更新検出は独立したWorkflowとして管理する。
+- CIはPull Requestの `opened`、`synchronize`、`reopened` に加え、毎月1日に定期実行する。実行環境のmacOS・Xcodeバージョンをサマリーに記録する。依存関係の更新検出はDependabotなどの別の仕組みで管理する。
 
 ## 依存関係の更新
 - Ruby、Node.js、Homebrew等の更新は、互換性とサポート状況を確認して行う。
