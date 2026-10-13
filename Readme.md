@@ -6,14 +6,17 @@
 
 ## セットアップ
 
-```sh
-git clone https://github.com/mitsuharu/macos-infra.git ~/macos-infra
-cd ~/macos-infra
-# スクリプトの内容を確認してから実行
-bash install.sh
+GitをインストールしていないMacでも、macOS標準の `curl` と `bash` で初期セットアップを起動できます。
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mitsuharu/macos-infra/master/install.sh)"
 ```
 
-現状のスクリプトにはカレントディレクトリや既存インストール状態に依存する部分があります。上記の手順は自動セットアップ成功を保証するものではありません。特に `install.sh` は既存の `~/macos-infra` があると `git clone` が失敗します。修正するまでは `shells/` 以下の処理を確認し、必要な処理を個別に実行してください。
+初回にXcode Command Line Toolsが見つからない場合は、macOSのインストールダイアログを開いて処理を終了します。**Command Line Toolsのインストールが完了した後、同じコマンドを再実行してください。** Gitが利用可能なことを確認してから、リポジトリを `~/macos-infra` にcloneします。
+
+すでにリポジトリが存在する場合は、既存のチェックアウトを使用します。更新を取得するには後述の `update.sh` を使ってください。
+
+> `curl` で取得したコードをそのまま実行するため、初回実行前に `install.sh` と `shells/` の内容をGitHubで確認してください。既存環境への影響がある処理を含みます。自動セットアップ全体の実機検証は継続中です。
 
 ## CI
 
