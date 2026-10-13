@@ -19,9 +19,9 @@ bash install.sh
 
 `.github/workflows/ci.yml` では以下を実行します。
 
-- Pull Request（作成・更新・再オープン）: `bash -n` によるシェル構文、`zsh -n` によるzprofile構文、`ruby -c` によるBrewfile構文検証
+- Pull Request（作成・更新・再オープン）と毎月1日（日本時間11:17）: `bash -n` によるシェル構文、`zsh -n` によるzprofile構文、`ruby -c` によるBrewfile構文検証
 
-CIはスクリプトを**実行しません**。Homebrew、Ruby、Node.js、CocoaPods、Xcode Command Line Toolsのインストールや、ユーザー環境の書き換えは行いません。CIの成功は新規Macへのセットアップ成功を意味しません。
+CIはmacOSバージョン・Xcodeバージョン・CPUアーキテクチャをActionsのサマリーに記録します。毎月の実行は環境変化の確認用で、新しいmacOSの公開そのものを検知して通知する機能ではありません。CIはセットアップスクリプトを**実行しません**。Homebrew、Ruby、Node.js、CocoaPods、Xcode Command Line Toolsのインストールや、ユーザー環境の書き換えは行いません。CIの成功は新規Macへのセットアップ成功を意味しません。
 
 ## 今後の改善候補
 
