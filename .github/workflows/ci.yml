@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    # 毎月1日 11:17 JST（UTC 02:17）。毎時0分に実行が集中しやすいため17分にずらす。
+    - cron: '17 2 1 * *'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate setup files
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Record macOS runner environment
+        shell: bash
+        run: |
+          echo "## macOS runner environment" >> "$GITHUB_STEP_SUMMARY"
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          sw_vers | tee -a "$GITHUB_STEP_SUMMARY"
+          uname -m | tee -a "$GITHUB_STEP_SUMMARY"
+          xcodebuild -version | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Check shell syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            bash -n "$file"
+          done < <(find . -type f -name '*.sh' -print0)
+          zsh -n dotfiles/.zprofile
+
+      - name: Check Brewfile syntax
+        run: ruby -c shells/Brewfile
+
+      - name: Check whitespace
+        run: git diff --check
