@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   schedule:
-    # 毎月1日 11:17 JST（UTC 02:17）
+    # 毎月1日 11:17 JST（UTC 02:17）。毎時0分に実行が集中しやすいため17分にずらす。
     - cron: '17 2 1 * *'
 
 permissions:
