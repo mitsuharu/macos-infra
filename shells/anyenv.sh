@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
 
 RUBY_VER="3.4.7"
 NODE_VER="24.13.0"
@@ -30,14 +31,24 @@ source ~/.zprofile
 wait
 
 echo "ruby ${RUBY_VER} をインストールします"
-rbenv install ${RUBY_VER}
+rbenv install -s "${RUBY_VER}"
 rbenv rehash
-rbenv global ${RUBY_VER}
+rbenv global "${RUBY_VER}"
+
+# macOS標準Rubyに戻ったままCocoaPodsを入れないよう、選択結果を検証する。
+if [[ "$(rbenv version-name)" != "${RUBY_VER}" ]]; then
+  echo "エラー: rbenvでRuby ${RUBY_VER} を選択できませんでした" >&2
+  exit 1
+fi
+if [[ "$(rbenv exec ruby -e 'print RbConfig.ruby')" != "$HOME/.anyenv/envs/rbenv/versions/"* ]]; then
+  echo "エラー: rbenv管理外のRubyが使用されています" >&2
+  exit 1
+fi
 
 echo "Node.js ${NODE_VER} をインストールします"
-nodenv install ${NODE_VER}
+nodenv install -s "${NODE_VER}"
 nodenv rehash
-nodenv global ${NODE_VER}
+nodenv global "${NODE_VER}"
 
 # Node.js 24 までは corepack が梱包されている
 corepack enable
