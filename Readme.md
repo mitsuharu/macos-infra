@@ -59,8 +59,8 @@ bash ~/macos-infra/update.sh --apply
 
 GitHub Actionsの「GitHub Release」Workflowは、以下の2つの方法でリリースを作成できます。
 
-- **タグで公開:** `master` の対象コミットに `v1.0.0` 形式のタグを作成・pushする。
-- **手動で公開:** GitHubの **Actions → GitHub Release → Run workflow** を開き、`master` を選び、`version` に `v1.0.0` 形式を指定する。
+- **タグで公開:** `master` の対象コミットに `1.0.0` 形式のタグを作成・pushする。
+- **手動で公開:** GitHubの **Actions → GitHub Release → Run workflow** を開き、`master` を選び、`version` に `1.0.0` 形式を指定する。
 
 どちらもGitHub Releaseを公開し、前回のリリースからマージされたPull RequestをGitHub標準の自動生成リリースノートに含めます。カテゴリは `.github/release.yml` のラベル設定に従います。タグ・リリースは一度公開した後に自動上書きしません。
 
