@@ -3,11 +3,11 @@ name: GitHub Release
 on:
   push:
     tags:
-      - 'v[0-9]*'
+      - '[0-9]*'
   workflow_dispatch:
     inputs:
       version:
-        description: 'リリースタグ（例: v1.0.0）'
+        description: 'リリースタグ（例: 1.0.0）'
         required: true
         type: string
 
@@ -45,8 +45,8 @@ jobs:
             tag="$REQUESTED_VERSION"
           fi
 
-          if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::タグはv1.2.3形式で指定してください: $tag"
+          if [[ ! "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::タグは1.2.3形式で指定してください: $tag"
             exit 1
           fi
           echo "TAG=$tag" >> "$GITHUB_ENV"
