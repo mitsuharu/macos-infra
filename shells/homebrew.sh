@@ -1,10 +1,29 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Homebrew
 echo "Homebrew をインストールします"
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if ! command -v brew >/dev/null 2>&1 && \
+   [[ ! -x /opt/homebrew/bin/brew && ! -x /usr/local/bin/brew ]]; then
+  # NONINTERACTIVE=1 は確認入力を省略するが、sudoのパスワード入力も行わない。
+  # 必要な場合は先にユーザーが管理者認証する。
+  if ! sudo -n true 2>/dev/null; then
+    echo "Homebrew のインストール前に管理者認証を行います"
+    sudo -v
+  fi
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew はインストール済みです"
+fi
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+else
+  echo "Homebrew が見つかりません" >&2
+  exit 1
+fi
 
 source ~/.zprofile
 wait
