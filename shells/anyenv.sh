@@ -9,7 +9,9 @@ wait
 
 # anyenv
 echo "anyenv を設定します"
-printf 'y\n' | anyenv install --init
+if [[ ! -d "$HOME/.config/anyenv/anyenv-install" ]]; then
+  printf 'y\n' | anyenv install --init
+fi
 
 source ~/.zprofile
 wait
