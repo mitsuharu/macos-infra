@@ -9,7 +9,6 @@ wait
 
 # anyenv
 echo "anyenv を設定します"
-anyenv init
 printf 'y\n' | anyenv install --init
 
 source ~/.zprofile
