@@ -31,3 +31,7 @@ CIはスクリプトを**実行しません**。Homebrew、Ruby、Node.js、Coco
 - `.zprofile` のPATH設定、`.npmrc` の古い設定の見直し
 - Homebrew・Ruby・Node.jsの新バージョン検出とPR作成
 - macOS上でのインストールテスト（隔離された環境で実施）
+
+## GitHub Actionsの依存関係
+
+GitHub Actionsは完全なコミットSHAで固定し、行末コメントにリリースバージョンを記載します。`.github/dependabot.yml` により、GitHub Actionsの更新を月1回確認してPRを提案します。自動マージは行いません。
