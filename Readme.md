@@ -19,9 +19,7 @@ bash install.sh
 
 `.github/workflows/ci.yml` では以下を実行します。
 
-- Push / Pull Request: `bash -n` によるシェル構文、`zsh -n` によるzprofile構文、`ruby -c` によるBrewfile構文検証
-- 毎月1日: 同じ静的検証を定期実行
-- 手動実行: GitHub Actions から `workflow_dispatch`
+- Pull Request（作成・更新・再オープン）: `bash -n` によるシェル構文、`zsh -n` によるzprofile構文、`ruby -c` によるBrewfile構文検証
 
 CIはスクリプトを**実行しません**。Homebrew、Ruby、Node.js、CocoaPods、Xcode Command Line Toolsのインストールや、ユーザー環境の書き換えは行いません。CIの成功は新規Macへのセットアップ成功を意味しません。
 
