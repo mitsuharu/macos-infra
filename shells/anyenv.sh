@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-RUBY_VER="3.4.7"
-NODE_VER="24.13.0"
+RUBY_VER="3.4.11"
+NODE_VER="24.21.0"
 
 source ~/.zprofile
 wait
 
 # anyenv
 echo "anyenv を設定します"
-anyenv init
-anyenv install --init
+if [[ ! -d "$HOME/.config/anyenv/anyenv-install" ]]; then
+  printf 'y\n' | anyenv install --init
+fi
 
 source ~/.zprofile
 wait
@@ -18,14 +19,16 @@ wait
 # anyenv update
 echo "anyenv update をダウンロードしています"
 mkdir -p ~/.anyenv/plugins
-git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
+if [[ ! -d "$HOME/.anyenv/plugins/anyenv-update/.git" ]]; then
+  git clone https://github.com/znz/anyenv-update.git "$HOME/.anyenv/plugins/anyenv-update"
+fi
 
 # env
 echo "rbenv をインストールします"
-anyenv install rbenv
+if [[ ! -d "$HOME/.anyenv/envs/rbenv" ]]; then anyenv install rbenv; fi
 
 echo "nodenv をインストールします"
-anyenv install nodenv
+if [[ ! -d "$HOME/.anyenv/envs/nodenv" ]]; then anyenv install nodenv; fi
 
 source ~/.zprofile
 wait
@@ -58,11 +61,15 @@ source ~/.zprofile
 wait
 
 echo "rbenv-aliases をインストールします"
-git clone https://github.com/tpope/rbenv-aliases.git $(rbenv root)/plugins/rbenv-aliases
+if [[ ! -d "$(rbenv root)/plugins/rbenv-aliases/.git" ]]; then
+  git clone https://github.com/tpope/rbenv-aliases.git "$(rbenv root)/plugins/rbenv-aliases"
+fi
 rbenv alias --auto
 
 echo "nodenv-aliases をインストールします"
-git clone https://github.com/nodenv/nodenv-aliases.git $(nodenv root)/plugins/nodenv-aliases
+if [[ ! -d "$(nodenv root)/plugins/nodenv-aliases/.git" ]]; then
+  git clone https://github.com/nodenv/nodenv-aliases.git "$(nodenv root)/plugins/nodenv-aliases"
+fi
 nodenv alias --auto
 
 source ~/.zprofile

@@ -1,0 +1,60 @@
+name: macOS実インストール検証
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'shells/**'
+      - 'dotfiles/**'
+      - 'install.sh'
+      - '.github/workflows/install-test.yml'
+  schedule:
+    # 毎月1日 11:23 JST。毎時0分の負荷集中を避けるため23分にずらす。
+    - cron: '23 2 1 * *'
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: 新規macOSランナーで開発環境を構築
+    runs-on: macos-latest
+    timeout-minutes: 100
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: macOS環境
+        shell: bash
+        run: |
+          sw_vers
+          uname -m
+          xcodebuild -version
+
+      - name: 元のセットアップ順序で実インストール
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash shells/init.sh
+
+      - name: 実行環境の検証
+        shell: bash
+        run: |
+          set -euo pipefail
+          source "$HOME/.zprofile"
+          brew bundle check --file=shells/Brewfile
+          test "$(rbenv version-name)" = "3.4.11"
+          test "$(nodenv version-name)" = "24.21.0"
+          rbenv exec ruby --version
+          rbenv exec gem env home
+          nodenv exec node --version
+          rbenv exec pod --version
+          test "$(rbenv exec ruby -e 'print RbConfig.ruby')" != "/usr/bin/ruby"
+          echo "## 構築結果" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Ruby、Node.js、CocoaPods、Brewfileの検証に成功しました。' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 再実行テスト
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash shells/init.sh

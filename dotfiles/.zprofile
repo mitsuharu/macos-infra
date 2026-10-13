@@ -23,7 +23,7 @@ alias ll="ls -l"
 #alias la="ls -F -a -G"
 #alias ll="ls -l -G"
 
-alias pip-all="pip list -o | awk 'NR>2 {print $1}' | xargs pip install -U"
+alias pip-all="pip list -o | awk 'NR>2 {print \$1}' | xargs pip install -U"
 
 PATH="\
 :/sbin\
