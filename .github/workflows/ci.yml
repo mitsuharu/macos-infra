@@ -38,6 +38,24 @@ jobs:
           done < <(find . -type f -name '*.sh' -print0)
           zsh -n dotfiles/.zprofile
 
+      - name: Audit shell scripts with ShellCheck
+        shell: bash
+        run: |
+          set -uo pipefail
+          brew install shellcheck
+          echo "## ShellCheck の検出結果（既存コードの監査）" >> "$GITHUB_STEP_SUMMARY"
+          echo '絞り込みなしで全シェルスクリプトを検査します。既存コードの修正が済むまで、このステップは失敗扱いにしません。' >> "$GITHUB_STEP_SUMMARY"
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          set +e
+          find . -type f -name '*.sh' -print0 |
+            xargs -0 shellcheck --format=gcc 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          result="${PIPESTATUS[1]}"
+          set -e
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$result" -ne 0 ]]; then
+            echo "::warning::ShellCheck で既存の問題を検出しました。結果はジョブのサマリーを確認してください。"
+          fi
+
       - name: Check Brewfile syntax
         run: ruby -c shells/Brewfile
 
