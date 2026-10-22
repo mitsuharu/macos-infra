@@ -55,6 +55,15 @@ jobs:
           echo "## 構築結果" >> "$GITHUB_STEP_SUMMARY"
           echo 'Ruby、Node.js、CocoaPods、Brewfileの検証に成功しました。' >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Safe Chainのシェル統合を検証
+        shell: bash
+        run: |
+          set -euo pipefail
+          source "$GITHUB_WORKSPACE/shells/safe-chain-release.sh"
+          "$HOME/.safe-chain/bin/safe-chain" --version | grep -Fx "Current safe-chain version: $SAFE_CHAIN_RELEASE"
+          zsh -lic 'npm safe-chain-verify' | tee "$RUNNER_TEMP/safe-chain-verify.log"
+          grep -F 'OK: Safe-chain works!' "$RUNNER_TEMP/safe-chain-verify.log"
+
       - name: 再実行テスト
         shell: bash
         run: |

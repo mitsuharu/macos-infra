@@ -60,6 +60,9 @@ jobs:
         shell: bash
         run: bash tests/setup_safety.sh
 
+      - name: Test Safe Chain installation and updates
+        run: python3 -m unittest discover -s tests -p 'test_safe_chain.py'
+
       - name: Check Brewfile syntax
         run: ruby -c shells/Brewfile
 
