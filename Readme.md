@@ -75,7 +75,20 @@ GitHub Actionsは完全なコミットSHAで固定し、行末コメントにリ
 
 ## 他のMacで更新する
 
-一度リポジトリを配置したMacでは、次のコマンドで `master` の更新を取り込みます。
+一度リポジトリを配置したMacでは、次の手順で `master` の更新を取り込みます。
+
+### 1. ブランチを最新状態にする
+
+`master` に切り替えてから、リモートの最新状態をfast-forwardで取り込みます。
+
+```bash
+git -C ~/macos-infra switch master
+git -C ~/macos-infra pull --ff-only origin master
+```
+
+`update.sh` 自身もpullしますが、実行中のスクリプトはpull前の内容のままです。先にpullしておくと、`update.sh` の変更も含めて最新の手順で更新できます。ローカルの変更やコミットがあってfast-forwardできない場合はpullが失敗するため、内容を確認してから対応してください。
+
+### 2. 更新スクリプトを実行する
 
 ```bash
 bash ~/macos-infra/update.sh
@@ -87,7 +100,13 @@ Brewfileに列挙されたツールも適用する場合は `--apply` を付け�
 bash ~/macos-infra/update.sh --apply
 ```
 
-未コミットの変更がある場合や `master` 以外のブランチでは停止します。dotfilesがリポジトリ内のファイルへシンボリックリンクされている場合、ファイル内容の変更は更新時に反映されます。新しいリンクの作成やRuby/Node.jsの変更、初期セットアップの再実行は行いません。
+Safe Chainを導入・更新する場合は、続けて次を実行します（`update.sh` はSafe Chainを更新しません）。
+
+```bash
+bash ~/macos-infra/shells/safe-chain.sh
+```
+
+`update.sh` は未コミットの変更がある場合や `master` 以外のブランチでは停止します。dotfilesがリポジトリ内のファイルへシンボリックリンクされている場合、ファイル内容の変更は更新時に反映されます。新しいリンクの作成やRuby/Node.jsの変更、初期セットアップの再実行は行いません。
 
 ## リリース
 
