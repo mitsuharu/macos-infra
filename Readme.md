@@ -18,6 +18,12 @@ GitをインストールしていないMacでも、macOS標準の `curl` と `ba
 
 > `curl` で取得したコードをそのまま実行するため、初回実行前に `install.sh` と `shells/` の内容をGitHubで確認してください。既存環境への影響がある処理を含みます。自動セットアップ全体の実機検証は継続中です。
 
+## 初期インストールのバージョン
+
+Ruby と Node.js のバージョンは `shells/runtime-versions.sh` で管理します。`RUBY_VER` または `NODE_VER` の1行を変更すると、初期インストールと実インストールCIの検証に同じ値が反映されます。このファイルの変更も実インストールCIの実行対象です。
+
+既存のMacにインストール済みのバージョンは、この設定の変更や `update.sh --apply` だけでは切り替わりません。
+
 ## Safe Chain
 
 初期セットアップでは、[Aikido Safe Chainの公式Unix/Linux/macOS手順](https://github.com/AikidoSec/safe-chain#unixlinuxmacos)に従い、バージョン固定のインストーラーをダウンロードし、SHA-256が一致した場合だけ `sh` で実行します。macOS標準環境では `sha256sum` の代わりに `shasum -a 256` で同じ検証を行います。ダウンロード用の一時ディレクトリは成功・失敗時ともに削除します。
