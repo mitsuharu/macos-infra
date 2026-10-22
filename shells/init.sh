@@ -26,6 +26,11 @@ echo "----------------"
 bash "$SHELLS_DIR/anyenv.sh"
 
 echo "----------------"
-echo "(5) devtools"
+echo "(5) safe-chain"
+echo "----------------"
+bash "$SHELLS_DIR/safe-chain.sh"
+
+echo "----------------"
+echo "(6) devtools"
 echo "----------------"
 bash "$SHELLS_DIR/devtools.sh"

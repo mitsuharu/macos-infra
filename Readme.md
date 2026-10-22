@@ -18,6 +18,34 @@ GitをインストールしていないMacでも、macOS標準の `curl` と `ba
 
 > `curl` で取得したコードをそのまま実行するため、初回実行前に `install.sh` と `shells/` の内容をGitHubで確認してください。既存環境への影響がある処理を含みます。自動セットアップ全体の実機検証は継続中です。
 
+## Safe Chain
+
+初期セットアップでは、[Aikido Safe Chainの公式Unix/Linux/macOS手順](https://github.com/AikidoSec/safe-chain#unixlinuxmacos)に従い、バージョン固定のインストーラーをダウンロードし、SHA-256が一致した場合だけ `sh` で実行します。macOS標準環境では `sha256sum` の代わりに `shasum -a 256` で同じ検証を行います。ダウンロード用の一時ディレクトリは成功・失敗時ともに削除します。
+
+インストール先は `~/.safe-chain` です。公式インストーラーは `.zshrc` / `.bashrc` などのシェル設定に読み込み処理を追加します。既存のnpm・Volta・nvm経由のSafe Chainがある場合、公式処理で移行されることがあります。完了後はターミナルを再起動して確認してください。
+
+```bash
+safe-chain --version
+npm safe-chain-verify
+```
+
+`OK: Safe-chain works!` と表示されればシェル統合が有効です。`update.sh --apply` はSafe Chainを更新しません。既存Macで導入・更新する場合は、リポジトリを更新後、次を実行します。
+
+```bash
+bash ~/macos-infra/shells/safe-chain.sh
+```
+
+### 月次の更新確認
+
+`.github/workflows/safe-chain-update.yml` は毎月1日11:31（日本時間）に公式READMEと最新の正式リリースを確認します。Actionsの「Safe Chainの月次更新」から `master` を選んで手動実行することもできます。
+
+- バージョンとハッシュの管理先は `shells/safe-chain-release.sh` です。公式READMEと取得したインストーラーのSHA-256を照合し、変更がある場合だけ更新PRを作成します。同じ内容のPRは再作成せず、自動マージもしません。
+- 公式手順の形式変更、READMEと最新リリースの不一致、ハッシュ不一致、通信エラーでは更新を止めてWorkflowを失敗させます。Actionsの失敗通知を有効にして、手順の見直しが必要か確認してください。
+- PR作成にはリポジトリの **Settings → Actions → General → Workflow permissions → Allow GitHub Actions to create and approve pull requests** を有効にする必要があります。トークンの権限は更新ジョブの `contents: write` と `pull-requests: write` に限定しています。
+- 自動作成PRのCIが承認待ちの場合は、PR画面の **Approve workflows to run** から実行し、通常CIとmacOS実インストール検証を確認してからマージしてください（[GitHubのイベント起動仕様](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow)）。
+
+月次ジョブは取得したインストーラーを実行しません。インストールとシェル統合、再実行は隔離されたmacOSの実インストールCIで検証します。
+
 ## CI
 
 `.github/workflows/ci.yml` では以下を実行します。
