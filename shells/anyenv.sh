@@ -2,7 +2,7 @@
 set -euo pipefail
 
 RUBY_VER="3.4.11"
-NODE_VER="24.21.0"
+NODE_VER="24.22.1"
 
 source ~/.zprofile
 wait
