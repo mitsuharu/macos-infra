@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-RUBY_VER="3.4.11"
-NODE_VER="24.22.1"
+SHELLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SHELLS_DIR/runtime-versions.sh"
 
 source ~/.zprofile
 wait

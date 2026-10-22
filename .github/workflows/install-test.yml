@@ -42,10 +42,11 @@ jobs:
         run: |
           set -euo pipefail
           source "$HOME/.zprofile"
+          source "$GITHUB_WORKSPACE/shells/runtime-versions.sh"
           brew bundle check --file=shells/Brewfile
           gh --version
-          test "$(rbenv version-name)" = "3.4.11"
-          test "$(nodenv version-name)" = "24.22.1"
+          test "$(rbenv version-name)" = "$RUBY_VER"
+          test "$(nodenv version-name)" = "$NODE_VER"
           rbenv exec ruby --version
           rbenv exec gem env home
           nodenv exec node --version
