@@ -40,7 +40,22 @@ yarn switch --version
 bash ~/macos-infra/shells/yarn-switch.sh
 ```
 
-使用するYarnのバージョンはプロジェクトの `package.json` の `packageManager` で指定します。既存プロジェクトの移行は `yarn switch zpm set version zpm`、更新は `yarn switch up` を実行します。
+### Yarn Switchの基本コマンド
+
+Yarn Switchは、一番近い `package.json` の `packageManager`（例: `"yarn@4.18.0"`）で指定されたバージョンのYarnを自動でダウンロードして実行します。指定がない場所ではYarn 1系の最新安定版を使います。
+
+| コマンド | 内容 |
+| --- | --- |
+| `yarn switch --version` | Yarn Switch本体のバージョンを表示する |
+| `yarn --version` | 現在のディレクトリで使われるYarnのバージョンを表示する |
+| `yarn switch up berry` | Yarn 4系（berry）の最新安定版に更新し、`packageManager` を書き換える |
+| `yarn switch up` | Yarn 6系（zpm）の最新安定版に更新する。**Yarn 4のプロジェクトでもYarn 6に上がる**ため注意 |
+| `yarn switch <バージョン> <コマンド>` | `packageManager` を変えずに、指定したバージョンでコマンドを実行する（例: `yarn switch 4.18.0 --version`） |
+| `yarn switch cache --install` | プロジェクトで指定されたバージョンを事前にダウンロードする |
+| `yarn switch cache` | ダウンロード済みのバージョンを一覧表示する |
+| `yarn switch cache --clear` | ダウンロード済みのバージョンを削除する |
+
+`yarn switch up` の実行後は、`git diff` で `package.json` などの変更内容を確認してください。詳細は公式ドキュメントの[Yarn Switch](https://v6.yarnpkg.com/concepts/switch)と[インストール](https://v6.yarnpkg.com/getting-started)を参照してください。
 
 ### Safe Chainと併用するときの注意
 
@@ -51,7 +66,7 @@ Safe Chainは `yarn` をシェル関数で包み、自身のプロキシ（`HTTP
 Error: error sending request for url (https://registry.npmjs.org/@yarnpkg/cli-dist/-/cli-dist-4.18.0.tgz)
 ```
 
-Yarn Switchは、`package.json` の `packageManager` で指定されたバージョン（指定がない場所ではYarn 1系の最新安定版）を初回実行時にダウンロードします。初めて使うバージョンでこのエラーが出た場合（導入直後や `yarn switch up` の後など）は、対象のプロジェクトで次を1回実行してダウンロードしてください。`command` はシェル関数を経由せず、Safe Chainを通さずに実行します。
+Yarn Switchは、`package.json` の `packageManager` で指定されたバージョン（指定がない場所ではYarn 1系の最新安定版）を初回実行時にダウンロードします。初めて使うバージョンでこのエラーが出た場合（導入直後や `yarn switch up` の後など）は、対象のプロジェクトで次を1回実行してダウンロードしてください。`yarn switch up` 自体が失敗する場合は `command yarn switch up berry` のように実行します。`command` はシェル関数を経由せず、Safe Chainを通さずに実行します。
 
 ```bash
 command yarn --version
