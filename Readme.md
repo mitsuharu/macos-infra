@@ -24,6 +24,24 @@ Ruby と Node.js のバージョンは `shells/runtime-versions.sh` で管理し
 
 既存のMacにインストール済みのバージョンは、この設定の変更や `update.sh --apply` だけでは切り替わりません。
 
+## Yarn
+
+Yarnは[Yarn Switch](https://v6.yarnpkg.com/)で導入します。Node.js 25以降はcorepackが梱包されないため、`corepack enable` は使用しません。初期セットアップでは `shells/yarn-switch.sh` が公式インストーラー（`https://repo.yarnpkg.com/install`）を一時ディレクトリにダウンロードして実行し、`~/.yarn/switch/bin/yarn` に配置します。
+
+公式インストーラーは `~/.yarn/switch/env` を作成し、`.zshrc` / `.bashrc` の末尾に読み込み処理を追記します（既に追記済みなら変更しません）。`.zshrc` を読まない非対話のログインシェルでも使えるよう、`dotfiles/.zprofile` でも `~/.yarn/switch/bin` をPATHの先頭に追加しています。完了後はターミナルを再起動して確認してください。
+
+```bash
+yarn switch --version
+```
+
+導入済みのMacで追加・更新する場合は、リポジトリを更新後、次を実行します（`update.sh` はYarn Switchを導入・更新しません）。再実行すると最新の安定版で上書きされます。
+
+```bash
+bash ~/macos-infra/shells/yarn-switch.sh
+```
+
+使用するYarnのバージョンはプロジェクトの `package.json` の `packageManager` で指定します。既存プロジェクトの移行は `yarn switch zpm set version zpm`、更新は `yarn switch up` を実行します。
+
 ## Safe Chain
 
 初期セットアップでは、[Aikido Safe Chainの公式Unix/Linux/macOS手順](https://github.com/AikidoSec/safe-chain#unixlinuxmacos)に従い、バージョン固定のインストーラーをダウンロードし、SHA-256が一致した場合だけ `sh` で実行します。macOS標準環境では `sha256sum` の代わりに `shasum -a 256` で同じ検証を行います。ダウンロード用の一時ディレクトリは成功・失敗時ともに削除します。
@@ -98,6 +116,12 @@ Brewfileに列挙されたツールも適用する場合は `--apply` を付け�
 
 ```bash
 bash ~/macos-infra/update.sh --apply
+```
+
+Yarn Switchを導入・更新する場合は、続けて次を実行します（`update.sh` はYarn Switchを導入・更新しません）。
+
+```bash
+bash ~/macos-infra/shells/yarn-switch.sh
 ```
 
 Safe Chainを導入・更新する場合は、続けて次を実行します（`update.sh` はSafe Chainを更新しません）。

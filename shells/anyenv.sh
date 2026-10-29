@@ -53,10 +53,6 @@ nodenv install -s "${NODE_VER}"
 nodenv rehash
 nodenv global "${NODE_VER}"
 
-# Node.js 24 までは corepack が梱包されている
-corepack enable
-# corepack use yarn # プロジェクトごとに設定する
-
 source ~/.zprofile
 wait
 
