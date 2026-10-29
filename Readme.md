@@ -24,6 +24,18 @@ Ruby と Node.js のバージョンは `shells/runtime-versions.sh` で管理し
 
 既存のMacにインストール済みのバージョンは、この設定の変更や `update.sh --apply` だけでは切り替わりません。
 
+## Yarn
+
+Yarnは[Yarn Switch](https://v6.yarnpkg.com/)で導入します。Node.js 25以降はcorepackが梱包されないため、`corepack enable` は使用しません。`shells/anyenv.sh` で公式インストーラー（`https://repo.yarnpkg.com/install`）を一時ディレクトリにダウンロードして実行し、`~/.yarn/switch/bin/yarn` に配置します。
+
+公式インストーラーは `~/.yarn/switch/env` を作成し、`.zshrc` / `.bashrc` の末尾に読み込み処理を追記します（既に追記済みなら変更しません）。完了後はターミナルを再起動して確認してください。
+
+```bash
+yarn switch --version
+```
+
+使用するYarnのバージョンはプロジェクトの `package.json` の `packageManager` で指定します。既存プロジェクトの移行は `yarn switch zpm set version zpm`、更新は `yarn switch up` を実行します。
+
 ## Safe Chain
 
 初期セットアップでは、[Aikido Safe Chainの公式Unix/Linux/macOS手順](https://github.com/AikidoSec/safe-chain#unixlinuxmacos)に従い、バージョン固定のインストーラーをダウンロードし、SHA-256が一致した場合だけ `sh` で実行します。macOS標準環境では `sha256sum` の代わりに `shasum -a 256` で同じ検証を行います。ダウンロード用の一時ディレクトリは成功・失敗時ともに削除します。

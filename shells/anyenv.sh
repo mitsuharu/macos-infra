@@ -53,9 +53,14 @@ nodenv install -s "${NODE_VER}"
 nodenv rehash
 nodenv global "${NODE_VER}"
 
-# Node.js 24 までは corepack が梱包されている
-corepack enable
-# corepack use yarn # プロジェクトごとに設定する
+echo "Yarn Switch をインストールします"
+# corepack enable は使わない。Node.js 25以降はcorepackが梱包されず、Yarn公式もYarn Switchを推奨するため。
+# curl | bash にしない。ダウンロード失敗時に set -e で確実に停止させるため。
+YARN_SWITCH_TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$YARN_SWITCH_TMP_DIR"' EXIT
+curl -fsSL https://repo.yarnpkg.com/install -o "$YARN_SWITCH_TMP_DIR/install-yarn-switch.sh"
+bash "$YARN_SWITCH_TMP_DIR/install-yarn-switch.sh"
+"$HOME/.yarn/switch/bin/yarn" switch --version
 
 source ~/.zprofile
 wait

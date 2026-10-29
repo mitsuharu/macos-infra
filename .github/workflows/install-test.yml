@@ -55,6 +55,15 @@ jobs:
           echo "## 構築結果" >> "$GITHUB_STEP_SUMMARY"
           echo 'Ruby、Node.js、CocoaPods、Brewfileの検証に成功しました。' >> "$GITHUB_STEP_SUMMARY"
 
+      # GitHub Actions上の公式インストーラーは.zshrcではなくGITHUB_PATHに追記するため、
+      # zsh -lic でのシェル統合ではなく、後続ステップのPATH解決で検証する。
+      - name: Yarn Switchを検証
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(command -v yarn)" = "$HOME/.yarn/switch/bin/yarn"
+          yarn switch --version
+
       - name: Safe Chainのシェル統合を検証
         shell: bash
         run: |
