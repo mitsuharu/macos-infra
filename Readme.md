@@ -42,6 +42,23 @@ bash ~/macos-infra/shells/yarn-switch.sh
 
 使用するYarnのバージョンはプロジェクトの `package.json` の `packageManager` で指定します。既存プロジェクトの移行は `yarn switch zpm set version zpm`、更新は `yarn switch up` を実行します。
 
+### Safe Chainと併用するときの注意
+
+Safe Chainは `yarn` をシェル関数で包み、自身のプロキシ（`HTTPS_PROXY`）と証明書（`NODE_EXTRA_CA_CERTS`）を設定して実行します。Yarn SwitchはRust製で `NODE_EXTRA_CA_CERTS` を読まないため、未取得のYarnをダウンロードするときに次のように失敗します。
+
+```text
+✗ · Failed to download Yarn 4.18.0 after 0.13s.
+Error: error sending request for url (https://registry.npmjs.org/@yarnpkg/cli-dist/-/cli-dist-4.18.0.tgz)
+```
+
+`shells/yarn-switch.sh` は既定のYarnを事前にダウンロードします。`yarn switch up` の後や、別バージョンを指定したプロジェクトで初めて実行するときにこのエラーが出た場合は、対象のプロジェクトで次を1回実行してダウンロードしてください。`command` はシェル関数を経由せず、Safe Chainを通さずに実行します。
+
+```bash
+command yarn --version
+```
+
+一度ダウンロードしたバージョンは、以降Safe Chain経由の `yarn` でも動作します。`command yarn install` や `command yarn add` はSafe Chainの検査を回避するため使用しないでください。
+
 ## Safe Chain
 
 初期セットアップでは、[Aikido Safe Chainの公式Unix/Linux/macOS手順](https://github.com/AikidoSec/safe-chain#unixlinuxmacos)に従い、バージョン固定のインストーラーをダウンロードし、SHA-256が一致した場合だけ `sh` で実行します。macOS標準環境では `sha256sum` の代わりに `shasum -a 256` で同じ検証を行います。ダウンロード用の一時ディレクトリは成功・失敗時ともに削除します。
