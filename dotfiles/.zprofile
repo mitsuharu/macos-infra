@@ -67,6 +67,13 @@ if [ -e $HOME/.anyenv ]; then
   eval "$(anyenv init -)"
 fi
 
+# Yarn Switch
+# 公式インストーラーが.zshrcに追記するPATHだけに頼らない。非対話のログインシェルでは.zshrcが読まれないため。
+# nodenv配下に残るcorepack由来のyarnより優先させるため、anyenvの後で先頭に追加する。
+if [ -d $HOME/.yarn/switch/bin ]; then
+  export PATH="$HOME/.yarn/switch/bin:$PATH"
+fi
+
 # android
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator

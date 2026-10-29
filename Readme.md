@@ -28,7 +28,7 @@ Ruby と Node.js のバージョンは `shells/runtime-versions.sh` で管理し
 
 Yarnは[Yarn Switch](https://v6.yarnpkg.com/)で導入します。Node.js 25以降はcorepackが梱包されないため、`corepack enable` は使用しません。`shells/anyenv.sh` で公式インストーラー（`https://repo.yarnpkg.com/install`）を一時ディレクトリにダウンロードして実行し、`~/.yarn/switch/bin/yarn` に配置します。
 
-公式インストーラーは `~/.yarn/switch/env` を作成し、`.zshrc` / `.bashrc` の末尾に読み込み処理を追記します（既に追記済みなら変更しません）。完了後はターミナルを再起動して確認してください。
+公式インストーラーは `~/.yarn/switch/env` を作成し、`.zshrc` / `.bashrc` の末尾に読み込み処理を追記します（既に追記済みなら変更しません）。`.zshrc` を読まない非対話のログインシェルでも使えるよう、`dotfiles/.zprofile` でも `~/.yarn/switch/bin` をPATHの先頭に追加しています。完了後はターミナルを再起動して確認してください。
 
 ```bash
 yarn switch --version
