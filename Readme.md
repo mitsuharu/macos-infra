@@ -51,7 +51,7 @@ Safe Chainは `yarn` をシェル関数で包み、自身のプロキシ（`HTTP
 Error: error sending request for url (https://registry.npmjs.org/@yarnpkg/cli-dist/-/cli-dist-4.18.0.tgz)
 ```
 
-`shells/yarn-switch.sh` は既定のYarnを事前にダウンロードします。`yarn switch up` の後や、別バージョンを指定したプロジェクトで初めて実行するときにこのエラーが出た場合は、対象のプロジェクトで次を1回実行してダウンロードしてください。`command` はシェル関数を経由せず、Safe Chainを通さずに実行します。
+Yarn Switchは、`package.json` の `packageManager` で指定されたバージョン（指定がない場所ではYarn 1系の最新安定版）を初回実行時にダウンロードします。初めて使うバージョンでこのエラーが出た場合（導入直後や `yarn switch up` の後など）は、対象のプロジェクトで次を1回実行してダウンロードしてください。`command` はシェル関数を経由せず、Safe Chainを通さずに実行します。
 
 ```bash
 command yarn --version
